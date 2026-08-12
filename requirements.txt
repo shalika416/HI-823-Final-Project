@@ -1,0 +1,18 @@
+# Core data science
+# import
+numpy
+pandas
+scipy
+scikit-learn
+
+# Visualization
+matplotlib
+networkx
+
+# Bayesian network modeling
+pgmpy
+
+# Jupyter environment
+jupyterlab
+ipykernel
+ipywidgets
