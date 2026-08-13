@@ -46,11 +46,11 @@ MIMIC-IV data are not included in this repository. Access must be obtained indep
 
 ## Machine Learning and Network Models
 
-**Logistic Regression** — baseline model
-**LASSO Logistic Regression** — feature selection
-**XGBoost** — best performing model
-**Bayesian Network** — models conditional dependencies among clinical variables
-**Markov Blanket Analysis** — identifies direct predictors of mortality
+- **Logistic Regression** — baseline model
+- **LASSO Logistic Regression** — feature selection
+- **XGBoost** — best performing model
+- **Bayesian Network** — models conditional dependencies among clinical variables
+- **Markov Blanket Analysis** — identifies direct predictors of mortality
 
 ## Key Features
 
