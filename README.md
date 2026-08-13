@@ -1,74 +1,82 @@
-# COVID-19 Hospital Mortality Prediction Using LASSO and Bayesian Networks
+# COVID-19 Hospital Mortality Prediction and Clinical Network Analysis Using MIMIC-IV
 
 ## Project Overview
 
-This project analyzes **in-hospital mortality among patients hospitalized with COVID-19** using clinical data from MIMIC-IV.
-
-The project combines machine learning and probabilistic graphical modeling to identify important mortality predictors and examine relationships among patient demographics, comorbidities, first 24-hour laboratory measurements, and hospital mortality.
-
-LASSO regression is used for feature selection, while a Bayesian network models conditional dependencies among selected variables. Markov blanket analysis identifies the variables most directly informative about mortality within the learned network.
+This project analyzes **in-hospital mortality among patients hospitalized with COVID-19** using clinical data from MIMIC-IV. It combines statistical analysis, machine learning, and probabilistic graphical modeling to identify important mortality predictors and examine relationships among patient demographics, comorbidities, first 24-hour laboratory measurements, and hospital mortality. Logistic Regression, LASSO Logistic Regression, and XGBoost are used to predict in-hospital mortality and compare model performance. Pairwise association analysis examines relationships among clinical variables. A Bayesian network models conditional dependencies, while Markov blanket analysis identifies variables most directly informative about mortality.
 
 ## Dataset
 
 **Source:** MIMIC-IV v3.1
 
-The COVID-19 cohort is identified using **ICD-10-CM diagnosis code U07.1** and combines patient demographics, hospital admission information, comorbidities, laboratory measurements, and mortality outcomes.
+The COVID-19 cohort is identified using **ICD-10-CM diagnosis code U07.1**.
+
+The final analytical cohort contains:
+
+- **3,978 COVID-19 hospital admissions**
+- **3,620 unique patients**
+- **412 in-hospital deaths**
+- **10.4% in-hospital mortality**
+- **23 candidate predictors**
+
+Predictors include demographics, comorbidities, and first 24-hour laboratory measurements.
 
 ### MIMIC-IV Tables Used
 
-| MIMIC-IV Table | Purpose in Project |
+| MIMIC-IV Table | Purpose |
 |---|---|
-| `patients.csv` | Patient demographics including sex and age-related variables |
-| `admissions.csv` | Hospital admission information, admission/discharge times, race, insurance, and in-hospital mortality |
-| `diagnoses_icd.csv` | Identifies COVID-19 admissions using ICD-10-CM U07.1 and derives patient comorbidities |
-| `d_icd_diagnoses.csv` | ICD diagnosis dictionary used to confirm diagnosis codes and descriptions |
-| `labevents.csv` | Patient laboratory results used to construct first 24-hour laboratory features |
-| `d_labitems.csv` | Laboratory item dictionary used to identify laboratory test item IDs |
+| `patients.csv` | Patient demographics |
+| `admissions.csv` | Hospital admission information and mortality outcome |
+| `diagnoses_icd.csv` | COVID-19 identification and comorbidity definitions |
+| `d_icd_diagnoses.csv` | ICD diagnosis dictionary |
+| `labevents.csv` | First 24-hour laboratory measurements |
+| `d_labitems.csv` | Laboratory item dictionary |
 
-MIMIC-IV is not included in this repository. Access must be obtained independently through PhysioNet.
+MIMIC-IV data are not included in this repository. Access must be obtained independently through PhysioNet.
 
 ## How It Works
 
 | Stage | Analysis |
 |---|---|
-| 1 | Build COVID-19 cohort from MIMIC-IV |
-| 2 | Extract demographics, comorbidities, and first 24-hour labs |
-| 3 | Clean and preprocess clinical data |
-| 4 | Perform LASSO feature selection and ROC/AUC evaluation |
-| 5 | Build and fit the Bayesian network |
-| 6 | Identify the mortality Markov blanket and perform probability inference |
+| 1 | Construct the MIMIC-IV COVID-19 cohort |
+| 2 | Extract and preprocess demographics, comorbidities, and first 24-hour labs |
+| 3 | Assign variables to temporal tiers and calculate pairwise 2×2 associations |
+| 4 | Train Logistic Regression, LASSO, and XGBoost models |
+| 5 | Compare model performance and identify important predictors |
+| 6 | Perform Bayesian network, Markov blanket, and temporal network analysis |
 
-## Machine Learning Models Used
+## Machine Learning and Network Models
 
-**LASSO Logistic Regression** — selects important mortality predictors.
-**Logistic Regression** — predicts mortality and evaluates ROC/AUC performance.
-**Bayesian Network** — models probabilistic relationships among clinical variables.
-**Markov Blanket Analysis** — identifies variables most directly related to mortality.
+**Logistic Regression** — baseline model
+**LASSO Logistic Regression** — feature selection
+**XGBoost** — best performing model
+**Bayesian Network** — models conditional dependencies among clinical variables
+**Markov Blanket Analysis** — identifies direct predictors of mortality
 
 ## Key Features
 
-- COVID-19 cohort construction from MIMIC-IV
-- LASSO-based feature selection
-- ROC/AUC model evaluation
+- MIMIC-IV COVID-19 cohort construction
+- Pairwise 2×2 association analysis
+- Logistic Regression, LASSO, and XGBoost
+- ROC/AUC model comparison
+- Feature importance analysis
 - Bayesian network structure learning
-- Markov blanket identification
-- Bayesian probability inference
-- Clinical network visualization
+- Mortality Markov blanket identification
+- Network visualization
 
 ## Output
 
 The project generates:
 
 - COVID-19 admission-level analytical dataset
-- Descriptive cohort statistics
-- LASSO-selected mortality predictors
+- Cohort descriptive statistics
+- Pairwise association results
 - LASSO coefficient plot
-- ROC curve and AUC
+- Logistic Regression, LASSO, and XGBoost performance metrics
+- ROC curve comparison
 - Bayesian network
-- Markov blanket of in-hospital mortality
+- Mortality Markov blanket
 - Markov blanket visualization
-- Bayesian probability estimates
-- Publication-quality figures and result tables
+- Direct predictor network
 
 ## Tech Stack — Development
 
@@ -81,10 +89,11 @@ MIMIC-IV data must be obtained separately by an authorized user and are **not di
 
 ## Libraries Used in Python
 
-- `pandas, numpy` — data processing
-- `scikit-learn` — ML models
-- `pgmpy` — Bayesian network structure learning, parameter estimation, and inference
-- `networkx, matplotlib` — visualization
+- `pandas`, `numpy` — data processing and numerical analysis
+- `scikit-learn` — Logistic Regression, LASSO, preprocessing, and model evaluation
+- `xgboost` — XGBoost classification and feature importance
+- `pgmpy` — Bayesian network structure learning and Markov blanket analysis
+- `networkx`, `matplotlib` — visualization 
 - `jupyterlab` — notebook environment
 
 ## Author
