@@ -1,15 +1,18 @@
 # Core data science
-# import
 numpy
 pandas
+scipy
 scikit-learn
 
-# Visualization
-matplotlib
-networkx
+# Machine learning
+xgboost
 
 # Bayesian network modeling
 pgmpy
+
+# Visualization
+networkx
+matplotlib
 
 # Jupyter environment
 jupyterlab
